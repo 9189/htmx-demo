@@ -1,16 +1,21 @@
 package com.example
 
-import com.example.plugins.*
+import com.example.adapter.driven.TodoTestDataAdapter
+import com.example.adapter.driving.todoResource
+import com.example.configuration.*
+import com.example.service.TodoService
 import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
+import io.ktor.server.routing.*
 
-fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
-}
+fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
-    configureTemplating()
-    configureRouting()
+    configuration()
+
+    val provider = TodoTestDataAdapter()
+    val todoApiUseCase = TodoService(provider)
+
+    routing {
+        todoResource(todoApiUseCase)
+    }
 }
