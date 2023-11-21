@@ -5,8 +5,8 @@ import com.example.port.driven.TodoProvider
 
 private val testData = mutableListOf(
     Todo(id = 1, "Cleaning", "things I don't like"),
-    Todo(id = 1, "Paying bills", "things I don't like"),
-    Todo(id = 1, "Things", "things I don't like"),
+    Todo(id = 2, "Paying bills", "things I don't like"),
+    Todo(id = 3, "Things", "things I don't like"),
 )
 
 class TodoTestDataAdapter : TodoProvider {

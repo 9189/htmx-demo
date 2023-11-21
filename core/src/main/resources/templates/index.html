@@ -1,7 +1,46 @@
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.8"
+            integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr"
+            crossorigin="anonymous">
+    </script>
+</head>
+
 <body>
-{% for todo in todos %}
-<h1>{{todo.title}}</h1>
-{% endfor %}
+
+<section class="md:container md:mx-auto">
+
+    <ul role="list" class="divide-y divide-gray-100">
+        {% for todo in todos %}
+        <li class="flex justify-between gap-x-6 py-5">
+            <div class="flex min-w-0 gap-x-4">
+                <div class="min-w-0 flex-auto">
+                    <p class="text-sm font-semibold leading-6 text-gray-900">{{todo.title}}</p>
+                    <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{todo.description}}</p>
+                </div>
+            </div>
+            <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+                        hx-delete="/todo/{{todo.id}}"
+                        hx-target="closest li"
+                        hx-swap="outerHTML swap:1s">
+                    Delete
+                </button>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        Add
+    </button>
+
+</section>
+
 </body>
 </html>

@@ -7,18 +7,24 @@ import io.ktor.server.pebble.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-private const val INDEX = "/"
+private const val INDEX_ROUTE = "/"
 private const val TODO_ID = "todoId"
-private const val TODO = "/todo/${TODO_ID}"
+private const val TODO_ROUTE = "/todo"
+private const val TODO_BY_ID_ROUTE = "${TODO_ROUTE}/{${TODO_ID}}"
 
 fun Route.todoResource(useCase: TodoApiUseCase) {
-    get(INDEX) {
+
+    get(INDEX_ROUTE) {
         val todos = useCase.getTodos()
         val content = PebbleContent("index.html", mapOf("todos" to todos))
         call.respond(content)
     }
 
-    delete(TODO) {
+    post(TODO_ROUTE) {
+
+    }
+
+    delete(TODO_BY_ID_ROUTE) {
         val id = call.parameters[TODO_ID]?.toInt() ?: return@delete call.respond(HttpStatusCode.BadRequest)
         useCase.deleteTodo(id)
         call.respond(HttpStatusCode.OK)
